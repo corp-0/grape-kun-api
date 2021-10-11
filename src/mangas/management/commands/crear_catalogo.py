@@ -6,14 +6,13 @@ import logging
 log = logging.getLogger("grape-kun")
 
 def limpiar_previews():
-    Proveedor.objects.all().delete()
     MangaPreview.objects.all().delete()
-    proveedor = Proveedor(nombre="MangaList")
-    proveedor.save()
+    Proveedor.objects.get_or_create(nombre="MangaList")
 
-def generar_previews():
+def generar_previews(paginas: int=None):
     manga_list = MangaList()
-    catalogo = manga_list.generar_catalogo(1)
+    log.info(f"Generando catálogo de {'total de ' if paginas is None else paginas} {'páginas' if paginas > 1 else 'página'}.")
+    catalogo = manga_list.generar_catalogo(paginas)
     for p in catalogo:
         log.info(f"Procesando: {p.nombre}")
         django_preview = MangaPreview(
@@ -22,12 +21,14 @@ def generar_previews():
             enlace_manga=p.enlace_manga,
             proveedor=Proveedor.objects.first()
         )
+        django_preview.agregar_generos([str(g) for g in p.generos])
         django_preview.save()
-
 
 class Command(BaseCommand):
     help = "Genera la indexación de manga previews"
+    def add_arguments(self, parser):
+        parser.add_argument('--paginas', type=int)
 
     def handle(self, *args, **options):
         limpiar_previews()
-        generar_previews()
+        generar_previews(options.get('paginas'))
