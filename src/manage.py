@@ -3,7 +3,14 @@
 import os
 import sys
 from dotenv import load_dotenv
+import logging
 
+log = logging.getLogger("grape-kun")
+log.setLevel(logging.DEBUG)
+format = logging.Formatter("[%(name)s][%(levelname)s][%(asctime)s]: %(message)s")
+ch = logging.StreamHandler(sys.stdout)
+ch.setFormatter(format)
+log.addHandler(ch)
 
 def main():
     """Run administrative tasks."""
