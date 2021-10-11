@@ -3,6 +3,9 @@
 import os
 import sys
 from dotenv import load_dotenv
+import logging
+
+log = logging.getLogger("grape-kun")
 
 
 def main():
