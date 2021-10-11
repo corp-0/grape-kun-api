@@ -27,7 +27,7 @@ SECRET_KEY = getenv('DJANGO_SECRET_KEY', 'django-insecure-2rda-5wm%)#aa_$x=y%e^u
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+GENEROS_ADULTOS = ["ECCHI", "HENTAI"]
 
 # Application definition
 
