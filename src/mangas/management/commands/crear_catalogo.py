@@ -11,7 +11,7 @@ def limpiar_previews():
 
 def generar_previews(paginas: int=None):
     manga_list = MangaList()
-    log.info(f"Generando catálogo de {'total de ' if paginas is None else paginas} {'páginas' if paginas > 1 else 'página'}.")
+    log.info(f"Generando catálogo de {'total de ' if paginas is None else paginas} {'páginas' if paginas is None or paginas > 1 else 'página'}.")
     catalogo = manga_list.generar_catalogo(paginas)
     for p in catalogo:
         log.info(f"Procesando: {p.nombre}")
