@@ -9,7 +9,7 @@ from manga_scrap.proveedores.mangaList import MangaList
 import json
 
 class MangaPreviewView(ListAPIView):
-    queryset = MangaPreview.objects
+    queryset = MangaPreview.objects.all()
     serializer_class = MangaPreviewSerializer
 
 class MangaDetalleView(APIView):
