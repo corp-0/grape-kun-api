@@ -1,0 +1,21 @@
+version: "3"
+
+x-django-defaults: &django_defaults
+  image: pinwin/grape-kun-api
+  env_file: ./.env
+  # recuerda tener el archivo sqlite en la raíz desde donde se llama el docker-compose
+  volumes:
+      - ./db.sqlite3:/src/db.sqlite3
+
+services:
+    web_migrate:
+        <<: *django_defaults
+        command: migrate
+
+
+    web:
+        <<: *django_defaults
+        depends_on:
+            -   web_migrate
+        ports:
+        -   "8000:8000"
