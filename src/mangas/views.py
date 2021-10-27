@@ -29,8 +29,9 @@ class MangaDetalleView(APIView):
             nombre=datos_preview.nombre,
             enlace_imagen=datos_preview.enlace_img,
             enlace_manga=datos_preview.enlace_manga,
-            generos=generos
+            generos=generos,
+            contenido_adulto=datos_preview.contenido_adulto
         )
 
-        respuesta = json.loads(manga_list.construir_manga(preview).to_json_string())
+        respuesta = json.loads(manga_list.obtener_manga_detalle(preview).to_json_string())
         return Response(respuesta, status=status.HTTP_200_OK)
