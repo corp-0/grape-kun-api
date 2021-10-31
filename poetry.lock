@@ -133,7 +133,7 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "manga-scrap"
-version = "0.3.0"
+version = "0.4.0"
 description = "A flexible and extensible library to scrap manga and convert it to usable models"
 category = "main"
 optional = false
@@ -302,7 +302,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "d925daccfc32ce12d1ea2e15b519b4a126db4626815d32a08fcfe05ae232a265"
+content-hash = "9e8f2dc18ed91989895860e3b76e45e0c4f0efa71057be59858d077cbb993922"
 
 [metadata.files]
 asgiref = [
@@ -354,8 +354,8 @@ idna = [
     {file = "idna-3.3.tar.gz", hash = "sha256:9d643ff0a55b762d5cdb124b8eaa99c66322e2157b69160bc32796e824360e6d"},
 ]
 manga-scrap = [
-    {file = "manga-scrap-0.3.0.tar.gz", hash = "sha256:5b75eed03a78f163bc9983ac6862eb728e71ac6ab74a459b56246207d78e9ebd"},
-    {file = "manga_scrap-0.3.0-py3-none-any.whl", hash = "sha256:8dabef99c74df4a22197254ac7ce84615f566bf805140bfcfb7381284fe76a6a"},
+    {file = "manga-scrap-0.4.0.tar.gz", hash = "sha256:e28f438a3888ac6ab71a91493bbeca8387a69f8473c2759213cd7079090a5921"},
+    {file = "manga_scrap-0.4.0-py3-none-any.whl", hash = "sha256:b3170c8f78f31a210fe52a78fd0c46eda9fbee3cea8efdfc6138e80ab7c343ff"},
 ]
 markdown = [
     {file = "Markdown-3.3.4-py3-none-any.whl", hash = "sha256:96c3ba1261de2f7547b46a00ea8463832c921d3f9d6aba3f255a6f71386db20c"},
