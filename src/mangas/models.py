@@ -33,5 +33,16 @@ class MangaPreview(models.Model):
                 return True
         return False
 
+    def a_json(self) -> dict:
+        return {
+            'id': self.id,
+            'nombre': self.nombre,
+            'enlace_img': self.enlace_img,
+            'enlace_manga': self.enlace_manga,
+            'generos': self.generos_como_lista,
+            'proveedor': self.proveedor.nombre,
+            'contenido_adulto': self.contenido_adulto
+        }
+
     def __str__(self) -> str:
         return self.nombre
