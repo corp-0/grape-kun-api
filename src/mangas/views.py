@@ -42,6 +42,7 @@ class MangaDetalleView(APIView):
         )
 
         respuesta = json.loads(manga_list.obtener_manga_detalle(preview).to_json_string())
+        respuesta["manga_id"] = datos_preview.id
         return Response(respuesta, status=status.HTTP_200_OK)
 
 class CapituloDetalleView(APIView):
@@ -76,6 +77,7 @@ class CapituloDetalleView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         respuesta = json.loads(manga_list.obtener_capitulo_detalle(capitulo.enlace).to_json_string())
+        respuesta["manga_id"] = datos_preview.id
         return Response(respuesta, status=status.HTTP_200_OK)
 
 
