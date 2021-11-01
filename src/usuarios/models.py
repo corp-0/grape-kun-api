@@ -9,7 +9,7 @@ class Usuario(AbstractUser):
     email = models.EmailField(verbose_name="Correo electronico", unique=True)
     username = models.CharField(max_length=50, verbose_name="Nombre de usuario")
     fec_nac = models.DateTimeField(verbose_name="Fecha de nacimiento")
-    favoritos_string = models.CharField(max_length=999999, verbose_name="Favoritos", default="[{}]")
+    favoritos_string = models.CharField(max_length=999999, verbose_name="Favoritos", default="[]")
     preferencias_string = models.JSONField(verbose_name="Preferencias", default=json.dumps(dict(filtrar_contenido_adulto=True, auto_login=True)))
 
     USERNAME_FIELD = "email"
