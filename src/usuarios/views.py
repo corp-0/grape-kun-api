@@ -1,15 +1,20 @@
-from rest_framework import status
-from rest_framework.generics import RetrieveAPIView, GenericAPIView,UpdateAPIView
-from rest_framework.response import Response
-from knox.models import AuthToken
-from .serializers import UsuarioSerializer, RegistrarUsuarioSerializer, LoginUsuarioSerializer, ActualizarUsuarioSerializer
-from .models import Usuario
-from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import PermissionDenied
+from knox.models import AuthToken
+from knox.views import LoginView as KnoxLoginView
+from rest_framework import status
+from rest_framework.generics import RetrieveAPIView, GenericAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .models import Usuario
+from .serializers import UsuarioSerializer, RegistrarUsuarioSerializer, LoginUsuarioSerializer, \
+    ActualizarUsuarioSerializer
+
 
 class UsuarioView(RetrieveAPIView):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
+
 
 class LoginConCredsView(GenericAPIView):
     serializer_class = LoginUsuarioSerializer
@@ -23,6 +28,7 @@ class LoginConCredsView(GenericAPIView):
             "token": AuthToken.objects.create(user)[1]
         }, status=status.HTTP_200_OK)
 
+
 class RegistrarUsuarioView(GenericAPIView):
     serializer_class = RegistrarUsuarioSerializer
 
@@ -35,9 +41,10 @@ class RegistrarUsuarioView(GenericAPIView):
             "token": AuthToken.objects.create(user)[1],
         }, status=status.HTTP_200_OK)
 
+
 class ActualizarUsuarioView(GenericAPIView):
     serializer_class = ActualizarUsuarioSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
         try:
@@ -52,6 +59,23 @@ class ActualizarUsuarioView(GenericAPIView):
         serializer = self.get_serializer(usuario, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        respueta = {"resultado": "Usuario actualizado correctamente", **serializer.data}
-        return Response(respueta, status=status.HTTP_200_OK)
+        respuesta = {"resultado": "Usuario actualizado correctamente", **serializer.data}
+        return Response(respuesta, status=status.HTTP_200_OK)
 
+
+class LoginConTokenView(KnoxLoginView):
+    def get_post_response_data(self, request, token, instance):
+        UserSerializer = self.get_user_serializer_class()
+
+        data = {
+            'token': token
+        }
+        if UserSerializer is not None:
+            data["user"] = UserSerializer(
+                request.user,
+                context=self.get_context()
+            ).data
+        return data
+
+    def get_user_serializer_class(self):
+        return UsuarioSerializer

@@ -15,12 +15,14 @@ class MangaPreviewView(ListAPIView):
     queryset = MangaPreview.objects.all()
     serializer_class = MangaPreviewSerializer
 
+
 class MangaDetalleView(APIView):
     """
     Vista para obtener el detalle de un manga.
     :param: id: id del manga
     :return: json con el detalle del manga
     """
+
     def get(self, request, id: int):
         manga_list = MangaList()
 
@@ -45,6 +47,7 @@ class MangaDetalleView(APIView):
         respuesta["manga_id"] = datos_preview.id
         return Response(respuesta, status=status.HTTP_200_OK)
 
+
 class CapituloDetalleView(APIView):
     """
     Vista para obtener los datos de un capítulo.
@@ -52,6 +55,7 @@ class CapituloDetalleView(APIView):
     :param: capitulo: índice del capítulo que pertenece a la vista de detalle.
     :return: json con los datos del capítulo, incluyendo sus imágenes
     """
+
     def get(self, request, id: int, capitulo: int):
         manga_list = MangaList()
 
@@ -79,5 +83,3 @@ class CapituloDetalleView(APIView):
         respuesta = json.loads(manga_list.obtener_capitulo_detalle(capitulo.enlace).to_json_string())
         respuesta["manga_id"] = datos_preview.id
         return Response(respuesta, status=status.HTTP_200_OK)
-
-
