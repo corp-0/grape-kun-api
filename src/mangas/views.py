@@ -8,12 +8,20 @@ from manga_scrap.modelos import MangaPreview as Preview, Genero
 from manga_scrap.proveedores.mangaList import MangaList
 import json
 
+
 class MangaPreviewView(ListAPIView):
     """
-    Vista para obtener una lista de mangas
+    Vista para obtener una lista de mangas. Es posible pasarle el parámetro "nsfw" para incluir mangas con contenido
+    adulto, de otro modo siempre mostrará aquellos los que no fueron marcados como NSFW.
     """
-    queryset = MangaPreview.objects.all()
     serializer_class = MangaPreviewSerializer
+
+    def get_queryset(self):
+        if self.kwargs.get('nsfw'):
+            return MangaPreview.objects.all()
+        else:
+            manga_ids = [x.pk for x in MangaPreview.objects.all() if not x.contenido_adulto]
+            return MangaPreview.objects.filter(id__in=manga_ids)
 
 
 class MangaDetalleView(APIView):
@@ -83,3 +91,26 @@ class CapituloDetalleView(APIView):
         respuesta = json.loads(manga_list.obtener_capitulo_detalle(capitulo.enlace).to_json_string())
         respuesta["manga_id"] = datos_preview.id
         return Response(respuesta, status=status.HTTP_200_OK)
+
+
+class MangaPreviewAleatorioView(APIView):
+    """
+    Vista para obtener un manga aleatorio.
+    :return: json con el preview del manga aleatorio
+    """
+
+    def get(self, request):
+        try:
+            if request.query_params.get('nsfw'):
+                manga_preview = MangaPreview.objects.all()
+            else:
+                mangas_sanos = [x.pk for x in MangaPreview.objects.all() if not x.contenido_adulto]
+                manga_preview = MangaPreview.objects.filter(id__in=mangas_sanos)
+
+        except MangaPreview.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"Error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        serialized = MangaPreviewSerializer(manga_preview)
+        return Response(serialized.data, status=status.HTTP_200_OK)
