@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import UsuarioView, RegistrarUsuarioView, LoginConCredsView, ActualizarUsuarioView, LoginConTokenView
-from knox.views import LogoutView, LoginView as KnoxLoginView
+from knox.views import LogoutView
 
 app_name = "usuarios"
 
