@@ -32,9 +32,3 @@ class LoginUsuarioSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError('Credenciales inválidas')
-
-class ActualizarUsuarioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Usuario
-        fields = ('username', 'fec_nac', 'preferencias_string', 'favoritos_string')
-

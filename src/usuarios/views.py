@@ -7,8 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Usuario
-from .serializers import UsuarioSerializer, RegistrarUsuarioSerializer, LoginUsuarioSerializer, \
-    ActualizarUsuarioSerializer
+from .serializers import UsuarioSerializer, RegistrarUsuarioSerializer, LoginUsuarioSerializer
 
 
 class UsuarioView(RetrieveAPIView):
@@ -43,7 +42,7 @@ class RegistrarUsuarioView(GenericAPIView):
 
 
 class ActualizarUsuarioView(GenericAPIView):
-    serializer_class = ActualizarUsuarioSerializer
+    serializer_class = UsuarioSerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
@@ -59,8 +58,7 @@ class ActualizarUsuarioView(GenericAPIView):
         serializer = self.get_serializer(usuario, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        respuesta = {"resultado": "Usuario actualizado correctamente", **serializer.data}
-        return Response(respuesta, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class LoginConTokenView(KnoxLoginView):
