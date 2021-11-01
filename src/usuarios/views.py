@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Usuario
-from .serializers import UsuarioSerializer, RegistrarUsuarioSerializer, LoginUsuarioSerializer
+from .serializers import UsuarioSerializer, RegistrarUsuarioSerializer, LoginUsuarioSerializer, ActualizarUsuarioSerializer
 
 
 class UsuarioView(RetrieveAPIView):
@@ -42,7 +42,7 @@ class RegistrarUsuarioView(GenericAPIView):
 
 
 class ActualizarUsuarioView(GenericAPIView):
-    serializer_class = UsuarioSerializer
+    serializer_class = ActualizarUsuarioSerializer
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
