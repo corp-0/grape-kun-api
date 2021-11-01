@@ -102,10 +102,10 @@ class MangaPreviewAleatorioView(APIView):
     def get(self, request):
         try:
             if request.query_params.get('nsfw'):
-                manga_preview = MangaPreview.objects.all()
+                manga_preview = MangaPreview.objects.all().order_by('?').first()
             else:
                 mangas_sanos = [x.pk for x in MangaPreview.objects.all() if not x.contenido_adulto]
-                manga_preview = MangaPreview.objects.filter(id__in=mangas_sanos)
+                manga_preview = MangaPreview.objects.filter(id__in=mangas_sanos).order_by('?').first()
 
         except MangaPreview.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
