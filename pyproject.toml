@@ -12,8 +12,8 @@ Markdown = "^3.3.4"
 django-filter = "^21.1"
 python-dotenv = "^0.19.0"
 django-cors-headers = "^3.10.0"
-manga-scrap = "^0.4.0"
 django-rest-knox = "^4.1.0"
+manga-scrap = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
