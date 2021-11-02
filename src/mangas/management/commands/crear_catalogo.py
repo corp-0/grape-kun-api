@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from mangas.models import MangaPreview, Proveedor
-from manga_scrap.proveedores.mangaList import MangaList
+from manga_scrap.proveedores.mangaStream import MangaStream
 import logging
 
 log = logging.getLogger("grape-kun")
@@ -10,9 +10,9 @@ def limpiar_previews():
     Proveedor.objects.get_or_create(nombre="MangaList")
 
 def generar_previews(paginas: int=None):
-    manga_list = MangaList()
+    manga_stream = MangaStream()
     log.info(f"Generando catálogo de {'total de ' if paginas is None else paginas} {'páginas' if paginas is None or paginas > 1 else 'página'}.")
-    catalogo = manga_list.generar_catalogo(paginas)
+    catalogo = manga_stream.generar_catalogo(paginas)
     for p in catalogo:
         log.info(f"Procesando: {p.nombre}")
         django_preview = MangaPreview(
