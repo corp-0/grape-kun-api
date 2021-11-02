@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from manga_scrap.modelos import MangaPreview as Preview, Genero
-from manga_scrap.proveedores.mangaList import MangaList
+from manga_scrap.proveedores.mangaStream import MangaStream
 import json
 
 
@@ -32,7 +32,7 @@ class MangaDetalleView(APIView):
     """
 
     def get(self, request, id: int):
-        manga_list = MangaList()
+        manga_list = MangaStream()
 
         if id is None:
             return Response({"Error": "ID de consulta inválida"}, status=status.HTTP_400_BAD_REQUEST)
@@ -65,7 +65,7 @@ class CapituloDetalleView(APIView):
     """
 
     def get(self, request, id: int, capitulo: int):
-        manga_list = MangaList()
+        manga_list = MangaStream()
 
         if id is None:
             return Response({"Error": "ID de consulta inválida"}, status=status.HTTP_400_BAD_REQUEST)
